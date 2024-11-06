@@ -15,6 +15,17 @@ app.get("/", (req, res) => {
   res.send("Server is ready now");
 });
 
+// Get all products
+app.get("/api/products", async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.status(200).json({ success: true, data: products });
+  } catch (error) {
+    console.log("Error in fettching products: ", error.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
 // Create Product
 app.post("/api/products", async (req, res) => {
   const product = req.body;
